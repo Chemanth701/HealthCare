@@ -1,0 +1,1 @@
+services:\n  - type: web\n    name: pulse-care-healthcare\n    runtime: node\n    plan: free\n    buildCommand: npm install\n    startCommand: npm start\n    envVars:\n      - key: MONGODB_URI\n        sync: false\n      - key: MONGODB_DB\n        value: healthcare
