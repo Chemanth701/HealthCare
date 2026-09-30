@@ -1,37 +1,69 @@
 # HealthCare — Pulse Care
 
-Responsive, installable personal-health PWA with local storage, device-scoped MongoDB sync, Render deployment, and conservative wellness guidance.
+Smart healthcare appointment and personal-health PWA for a college/full-stack project.
 
-## Features
-- Responsive dashboard, health snapshot and trend insights
-- Heart rate, blood pressure, glucose, oxygen and weight logging
-- Correct blood-pressure parsing and recent trend charts
-- Medicine tracking, adherence and basic interaction reminders
-- Conservative symptom red-flag guidance
-- Appointments, breathing exercise and shareable health summary
-- Emergency ID, emergency contact and India 112 shortcut
-- Offline local storage plus online MongoDB sync with timestamp conflict protection
-- PWA manifest/icon/service-worker caching
-- Dark/light theme, reduced-motion support, focus states and accessible labels
+## Reference-aligned modules
+
+The application now follows the supplied Smart Healthcare structure: Patient, Doctor and Admin roles; doctor discovery; doctor profiles; availability; appointment workflow; medical records; prescriptions; Emergency ID + QR; notifications; mock payments; reviews; smart specialization suggestions; and role-aware administration.
+
+### Patient
+- Registration/login
+- Health dashboard and profile
+- Doctor search by name, specialization, hospital and location
+- Informational symptom-to-specialization suggestion
+- Doctor profile and fee/experience display
+- Appointment booking with In-person/Online type
+- Existing vitals, medicine tracking and wellness tools
+- Medical records and digital prescriptions
+- Emergency ID, emergency contact and temporary QR share link
+- Emergency ticket workflow through Care AI
 - JSON export and local-data erase
 
-## Stack
-HTML/CSS/JavaScript, Node.js + Express, MongoDB Atlas, Render.
+### Doctor
+- Doctor account registration
+- Doctor profile with qualification, specialization, experience, hospital, location, fee and consultation types
+- Availability publishing
+- Appointment accept/reject/complete workflow
+- Care-team dashboard
 
-## Data
-Database: healthcare
-Collection: device_states
-Fields: deviceId, state, updatedAt
+### Admin
+- Admin dashboard when ADMIN_EMAIL is configured in the deployment environment
+- Patient/doctor/appointment counts
+- Doctor verification controls
 
-This app has no user accounts. The browser-generated device ID is only a convenience identifier and is not strong authentication. Do not treat this design as suitable for regulated clinical records without proper authentication, authorization, encryption, audit logging and compliance review.
+### Advanced
+- Mock payment flow (no real money is charged)
+- Review/rating endpoint
+- Notifications collection and appointment/prescription notifications
+- Conservative symptom guidance; smart routing is informational and not a diagnosis
+- Care AI is a curated navigation/workflow assistant, not a trained medical model
 
-## Run
-Set MONGODB_URI and optionally MONGODB_DB=healthcare, then run:
+## Backend collections
+
+users, device_states, doctors, availability, appointments, medical_records, prescriptions, payments, reviews, notifications, emergency_tickets, emergency_shares, sessions.
+
+## Security
+
+- Passwords use scrypt hashing with per-password salt.
+- HTTP-only SameSite session cookies; Secure cookies in production.
+- Authenticated state and care APIs are scoped to the signed-in user.
+- Request body size and state-field validation are applied.
+- Emergency sharing uses expiring random tokens and exposes only selected emergency information.
+- MongoDB credentials stay in Render environment variables.
+- This is a student/project application, not a certified clinical system or HIPAA/DPDP/GDPR compliance implementation.
+
+## Render
+
+The service uses Node/Express, npm install, npm start, MongoDB Atlas and an HTTP health check at /api/health.
+
+## Run locally
+
+Set MONGODB_URI and optionally MONGODB_DB=healthcare, then:
 npm install
 npm start
 
-## Security
-Keep MongoDB credentials in Render environment variables. Restrict Atlas network access as tightly as your hosting setup permits.
+For an admin account, set ADMIN_EMAIL to the email of the account that should have admin access, then redeploy.
 
-## Disclaimer
-This app provides general wellness guidance only. It is not a medical device or diagnosis. For an emergency in India, call 112 or seek emergency care.
+## Emergency disclaimer
+
+For an actual emergency, call the local emergency number. In India, call 112. Do not delay emergency care while creating a ticket or using the app.
