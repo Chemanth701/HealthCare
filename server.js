@@ -1,6 +1,6 @@
 const express=require('express');const{MongoClient}=require('mongodb');const crypto=require('crypto');const path=require('path');
 const app=express(),port=Number(process.env.PORT||10000),dbName=process.env.MONGODB_DB||'healthcare';app.disable('x-powered-by');app.use(express.json({limit:'256kb',strict:true}));
-let db=null,col=null,users=null,sessions=null,ready=false;
+let db=null,col=null,users=null,sessions=null,tickets=null,ready=false;
 const emailOk=x=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(x||''));const token=()=>crypto.randomBytes(32).toString('hex');
 const hash=async(p,s=crypto.randomBytes(16).toString('hex'))=>new Promise((res,rej)=>crypto.scrypt(String(p),s,64,{N:16384,r:8,p:1},(e,b)=>e?rej(e):res(s+':'+b.toString('hex'))));
 const verify=async(p,h)=>{try{const[s,v]=String(h).split(':');const b=await hash(p,s),a=Buffer.from(b.split(':')[1],'hex'),c=Buffer.from(v,'hex');return a.length===c.length&&crypto.timingSafeEqual(a,c)}catch{return false}};
