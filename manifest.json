@@ -1,1 +1,18 @@
-{"name":"Pulse Care","short_name":"Pulse Care","start_url":"/","display":"standalone","background_color":"#F1F6F5","theme_color":"#0E7C7B","icons":[]}
+{
+  "name": "Pulse Care — HealthCare",
+  "short_name": "Pulse Care",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F1F6F5",
+  "theme_color": "#0E7C7B",
+  "description": "Personal health dashboard for vitals, medicines, appointments and emergency details.",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
